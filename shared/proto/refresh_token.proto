@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package auth;
+
+// The request message containing the refresh token.
+message RefreshTokenRequest {
+  string refresh_token = 1;
+}
+
+// The response message containing new access and refresh tokens.
+message RefreshTokenReply {
+  bool success = 1;
+  string access_token = 2;
+  string refresh_token = 3;
+  string error_message = 4;
+}
+
+// The gRPC Auth service definition.
+service AuthService {
+  // Refresh access token using refresh token.
+  rpc RefreshToken (RefreshTokenRequest) returns (RefreshTokenReply);
+}
+
+// syntax = "proto3";
+
+// package auth;
+
+// service AuthService {
+//   rpc ValidateToken (ValidateTokenRequest) returns (ValidateTokenResponse);
+// }
+
+// message ValidateTokenRequest {
+//   string access_token = 1;
+// }
+
+// message ValidateTokenResponse {
+//   string user_id = 1;
+//   repeated string permissions = 2;
+//   bool valid = 3;
+//   string error = 4;
+// }
