@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "services",
+			"path": "."
+		},
+		{
+			"name": "books_microservices",
+			"path": "../../books_microservices"
+		}
+	],
+	"settings": {}
+}

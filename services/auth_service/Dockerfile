@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Explicitly handle passlib and bcrypt versions to fix the compatibility issue.
 # Uninstalling them first ensures a clean slate before installing the specific versions.
 RUN pip uninstall -y passlib bcrypt || true && \
-    pip install --no-cache-dir "passlib==1.7.4" "bcrypt==4.0.1"
+    pip install --no-cache-dir --default-timeout=100 "passlib==1.7.4" "bcrypt==4.0.1"
 
 # Copy the application code into the container
 COPY . .
