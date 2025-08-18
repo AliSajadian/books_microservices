@@ -1,0 +1,30 @@
+services:
+  email_service:
+    image: email_service_image
+    container_name: email_service
+
+    build: . #/email_service # Points to the new directory
+    ports:
+      - "8003:8000" # Expose its own FastAPI port for health checks (optional)
+    environment:
+      # If you use environment variables for RabbitMQ_URL, define them here
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/
+      USER_EVENTS_EXCHANGE_NAME: user_events_exchange
+      EMAIL_SERVICE_QUEUE_NAME: email_service_queue
+      USER_REGISTERED_ROUTING_KEY: user.registered
+    # env_file: # This will load variables from .env.docker
+    #   - ./.env.docker
+    # depends_on: 
+    #   rabbitmq:
+    #     condition: service_healthy # <--- Wait for RabbitMQ to be healthy
+    networks:
+      - microservices_network
+    restart: on-failure # Keep it running even if it crashes (RabbitMQ connection issues)
+
+networks:
+  microservices_network:
+    external: true
+  default:
+    driver: bridge  # Explicitly set default network type
+    # enable_ipv6: false  # Disable IPv6 for the default network
+

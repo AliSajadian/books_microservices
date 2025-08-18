@@ -1,0 +1,49 @@
+services:
+  db-favorites:
+    image: postgres:17
+    container_name: favorites_service_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: db_favorites
+    networks:
+      - microservices_network  # Best practice: explicitly add it to the same network
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always  # Best practice: restart the container if it fails
+
+  favorites:
+    image: favorites_service_image
+    container_name: favorites_service
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db-favorites
+    environment:
+      - ASYNC_DATABASE_URL=postgresql+asyncpg://postgres:admin@db-favorites:5432/db_favorites
+      - GRPC_AUTH_SERVICE=auth:50051  # Ensure auth service name is correct
+      - GRPC_BOOKS_SERVICE=books:50052  # Corrected to refer to books service (as per your earlier description)
+    networks:
+      - default
+      - microservices_network
+    ports:
+      - "8002:8000"
+    volumes:
+      - .:/app  # Useful for development, but may need to be removed in production
+    working_dir: /app
+    restart: always  # Best practice: restart the container if it fails
+
+networks:
+  microservices_network:
+    external: true
+  default:
+    driver: bridge  # Explicitly set default network type
+    # enable_ipv6: false  # Disable IPv6 for the default network
+
+volumes:
+  postgres_data:
+    driver: local  # Explicitly define volume driver
+
