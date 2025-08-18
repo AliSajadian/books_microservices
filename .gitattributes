@@ -1,0 +1,24 @@
+echo "# Auto handle line endings
+* text=auto
+
+# Explicitly declare text files
+*.py text
+*.md text
+*.ini text
+*.yaml text
+*.yml text
+*.json text
+*.docker text
+*.mako text
+*.proto text
+
+# Files that should keep CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary files that shouldn't be modified
+*.pb2.py binary
+*.pb2_grpc.py binary
+*.png binary
+*.jpg binary" > .gitattributes

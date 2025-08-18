@@ -1,54 +1,33 @@
-# === Python ===
-*.py[cod]
-__pycache__/
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# === Environment ===
-.env
+echo "# Python environments
+.env/
 .venv/
 venv/
-ENV/
-env.bak/
-venv.bak/
+env/
 
-# === Logs & Databases ===
+# Python cache
+__pycache__/
+*.py[cod]
+*.so
+.Python
+
+# Other ignores (add your existing rules here)
 *.log
-*.sqlite3
+*.sqlite
 *.db
 
-# === Testing ===
+# Testing
 .coverage
 htmlcov/
-.tox/
-.nox/
 .pytest_cache/
 .mypy_cache/
 
-# === IDEs ===
+# IDEs
 .vscode/
 .idea/
 
-# === Docker ===
-# Don't ignore Dockerfiles!
-!Dockerfile
-!docker-compose*.yml
-
-# === System ===
+# System
 .DS_Store
 Thumbs.db
+
+# Docker
+!.dockerignore" > .gitignore
